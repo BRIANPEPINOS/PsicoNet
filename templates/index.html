@@ -4,274 +4,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeuroMind AI | Evaluación Psicométrica</title>
+    <title>PsicoNet | Evaluación</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-soft: #eef2ff;
+            --primary: #2563eb;
+            --primary-soft: #eff6ff;
             --card-radius: 20px;
         }
 
         body {
             min-height: 100vh;
-            background: radial-gradient(circle at top left, #e0f2fe 0, #eef2ff 40%, #f9fafb 100%);
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: #f3f4f6;
+            font-family: system-ui, -apple-system, sans-serif;
         }
 
         .navbar-custom {
-            background: linear-gradient(90deg, #111827, #1f2937);
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .navbar-brand span {
-            font-weight: 700;
-            letter-spacing: .03em;
-        }
-
-        .brand-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: .5rem;
-            padding: .15rem .75rem;
-            border-radius: 999px;
-            background-color: rgba(15, 118, 110, .1);
-            font-size: .75rem;
-            text-transform: uppercase;
-            letter-spacing: .12em;
-            color: #0f766e;
+            font-weight: 800;
+            color: #1f2937;
         }
 
         .shell {
-            max-width: 1100px;
-            margin: 2rem auto 3rem auto;
+            max-width: 900px;
+            margin: 2rem auto;
         }
 
         .card-main {
             border-radius: var(--card-radius);
             border: none;
-            box-shadow: 0 20px 40px rgba(15, 23, 42, .12);
-            background-color: #ffffffcc;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            background-color: white;
+            overflow: hidden;
         }
 
         .card-header-custom {
-            border-bottom: 1px solid #e5e7eb;
-            background: linear-gradient(90deg, var(--primary-soft), #ffffff);
-            border-radius: var(--card-radius) var(--card-radius) 0 0 !important;
-        }
-
-        .section-title {
-            font-size: 1.35rem;
-            font-weight: 600;
-            color: #111827;
+            background: white;
+            border-bottom: 1px solid #f0f0f0;
+            padding: 1.5rem;
         }
 
         .form-label {
-            font-weight: 500;
+            font-weight: 600;
             color: #374151;
-        }
-
-        .helper-text {
-            font-size: .85rem;
-            color: #6b7280;
+            font-size: 0.9rem;
         }
 
         .btn-primary {
             background-color: var(--primary);
-            border-color: var(--primary);
-            border-radius: 999px;
+            border: none;
+            padding: 12px;
             font-weight: 600;
-            padding-block: .7rem;
+            border-radius: 10px;
         }
 
-        .btn-primary:hover {
-            background-color: #4338ca;
-            border-color: #4338ca;
-        }
-
-        /* CORRECCIÓN: Estilos para el Dropdown del usuario */
-        .user-menu {
-            color: white;
-            text-decoration: none;
-            margin-left: 15px;
-        }
-        
-        .badge-pill {
-            border-radius: 999px;
-            padding: .45rem .9rem;
-            font-size: .85rem;
-        }
-        
-        /* Aseguramos que el warning pill tenga estilo */
-        .pill-warning {
-             background-color: #fef3c7;
-             color: #92400e;
-             border-radius: 999px;
-             padding: .35rem .75rem;
-             font-size: .8rem;
-             display: inline-flex;
-             gap: .35rem;
-        }
-
-        /* Estilos de resultados */
         .metric-card {
-            border-radius: 16px;
-            padding: 1rem 1.1rem;
-            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            background-color: #f9fafb;
             border: 1px solid #e5e7eb;
+            text-align: center;
         }
-        .metric-label { font-size: .8rem; text-transform: uppercase; color: #6b7280; margin-bottom: .35rem; }
+        
+        .metric-value {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Estilo para la guía de instrucciones */
+        .instruction-box {
+            background-color: var(--primary-soft);
+            border-left: 4px solid var(--primary);
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 25px;
+        }
+        
+        .scale-guide {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: #6b7280;
+            font-weight: 600;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
     </style>
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom">
-        <div class="container-fluid shell mt-0 mb-0"> <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-                <span class="fs-4">NeuroMind AI</span>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid shell mt-0 mb-0">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="#">
+                <span class="fs-4">PsicoNet</span>
             </a>
             
             <div class="d-flex align-items-center">
-                <span class="brand-pill d-none d-md-inline-flex me-3">
-                    Sistema de Redes Neuronales
-                </span>
-                
-                <div class="text-white border-start ps-3 ms-2">
-                    <small class="d-block text-muted" style="font-size: 0.7rem;">Hola,</small>
-                    <span class="fw-bold">{{ name }}</span> <a href="/logout" class="btn btn-outline-light btn-sm ms-3" style="border-radius: 20px; font-size: 0.8rem;">
-                        Cerrar Sesión
-                    </a>
+                <div class="text-end me-3 d-none d-md-block">
+                    <small class="d-block text-muted" style="font-size: 0.7rem;">Usuario</small>
+                    <span class="fw-bold text-dark">{{ name }}</span>
                 </div>
+                <a href="/logout" class="btn btn-outline-danger btn-sm rounded-pill px-3">
+                    Salir
+                </a>
             </div>
         </div>
     </nav>
 
-    <div class="shell">
+    <div class="shell px-3">
 
-        <div class="mb-3 d-flex justify-content-between align-items-center">
-            <div class="pill-warning">
-                <span>Uso Académico</span>
-                <span>·</span>
-                <span>Resultados NO clínicos.</span>
-            </div>
-            
-            {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                    {% for message in messages %}
-                        <div class="alert alert-info py-1 px-3 mb-0" style="font-size: 0.9rem;">{{ message }}</div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
-        </div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-warning mt-3 rounded-3 border-0 shadow-sm">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
-        <div class="card card-main">
+        <div class="card card-main mt-4">
             <div class="card-header card-header-custom">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center p-2">
-                    <div>
-                        <div class="text-uppercase text-xs text-muted" style="font-size:.8rem; letter-spacing:.14em;">
-                            Módulo de entrada
-                        </div>
-                        <h1 class="mt-1 mb-0 section-title">
-                            Test de Personalidad (TIPI)
-                        </h1>
-                    </div>
-                </div>
+                <h2 class="h4 mb-0 fw-bold">Test Psicométrico</h2>
             </div>
 
-            <div class="card-body pb-4">
+            <div class="card-body p-4">
                 
                 {% if not show_results %}
+                
+                <div class="instruction-box">
+                    <h5 class="fw-bold text-primary mb-2">Instrucciones de llenado</h5>
+                    <p class="mb-2 small text-muted">
+                        A continuación verás 10 pares de rasgos de personalidad. Indica qué tan de acuerdo estás con cada par que te describe, usando una escala del 1 al 7.
+                    </p>
+                    <p class="mb-0 small text-muted">
+                        <strong>Consejo:</strong> Sé honesto y no pienses demasiado tus respuestas.
+                    </p>
+                    
+                    <div class="mt-3 p-2 bg-white rounded border">
+                        <div class="progress" style="height: 6px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 100%"></div>
+                        </div>
+                        <div class="scale-guide">
+                            <span>1: Muy en desacuerdo</span>
+                            <span>4: Neutral</span>
+                            <span>7: Muy de acuerdo</span>
+                        </div>
+                    </div>
+                </div>
                 <form action="/" method="POST">
-                    <div class="row g-3 mb-3">
+                    <div class="row g-4 mb-4">
                         <div class="col-md-6">
                             <label class="form-label">1. Extravertido, entusiasta</label>
-                            <input type="number" class="form-control" name="tipi1" min="1" max="7" required>
+                            <input type="number" class="form-control bg-light border-0" name="tipi1" min="1" max="7" placeholder="1 - 7" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">2. Crítico, combativo</label>
-                            <input type="number" class="form-control" name="tipi2" min="1" max="7" required>
+                            <input type="number" class="form-control bg-light border-0" name="tipi2" min="1" max="7" placeholder="1 - 7" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">3. Confiable, autodisciplinado</label>
-                            <input type="number" class="form-control" name="tipi3" min="1" max="7" required>
+                            <input type="number" class="form-control bg-light border-0" name="tipi3" min="1" max="7" placeholder="1 - 7" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">4. Ansioso, se altera fácilmente</label>
-                            <input type="number" class="form-control" name="tipi4" min="1" max="7" required>
+                            <input type="number" class="form-control bg-light border-0" name="tipi4" min="1" max="7" placeholder="1 - 7" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">5. Abierto a nuevas experiencias</label>
-                            <input type="number" class="form-control" name="tipi5" min="1" max="7" required>
+                            <input type="number" class="form-control bg-light border-0" name="tipi5" min="1" max="7" placeholder="1 - 7" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">6. Reservado, callado</label>
-                            <input type="number" class="form-control" name="tipi6" min="1" max="7" required>
+                            <input type="number" class="form-control bg-light border-0" name="tipi6" min="1" max="7" placeholder="1 - 7" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">7. Comprensivo, cálido</label>
-                            <input type="number" class="form-control" name="tipi7" min="1" max="7" required>
+                            <input type="number" class="form-control bg-light border-0" name="tipi7" min="1" max="7" placeholder="1 - 7" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">8. Desorganizado, descuidado</label>
-                            <input type="number" class="form-control" name="tipi8" min="1" max="7" required>
+                            <input type="number" class="form-control bg-light border-0" name="tipi8" min="1" max="7" placeholder="1 - 7" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">9. Calmado, emocionalmente estable</label>
-                            <input type="number" class="form-control" name="tipi9" min="1" max="7" required>
+                            <input type="number" class="form-control bg-light border-0" name="tipi9" min="1" max="7" placeholder="1 - 7" required>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">10. Convencional, poco creativo</label>
-                            <input type="number" class="form-control" name="tipi10" min="1" max="7" required>
+                            <input type="number" class="form-control bg-light border-0" name="tipi10" min="1" max="7" placeholder="1 - 7" required>
                         </div>
-
-                        <div class="col-12 mt-2">
-                            <label class="form-label">Edad del sujeto</label>
-                            <input type="number" class="form-control" name="age" min="13" max="99" required>
+                        <div class="col-12">
+                            <label class="form-label">Edad</label>
+                            <input type="number" class="form-control bg-light border-0" name="age" min="13" max="99" required>
                         </div>
                     </div>
 
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary">
-                            Ejecutar modelo de predicción
+                        <button type="submit" class="btn btn-primary py-3">
+                            Analizar Resultados
                         </button>
                     </div>
                 </form>
                 {% endif %}
-                {% if show_results %}
-                <div class="result-section fade-in mt-3">
-                    <h3 class="text-center mb-4" style="color: var(--primary); font-weight: 800;">Análisis Completado</h3>
 
-                    <div class="row g-4">
+                {% if show_results %}
+                <div class="result-section fade-in">
+                    <h3 class="text-center mb-4 fw-bold text-primary">Resultados del Análisis</h3>
+
+                    <div class="row g-3">
                         <div class="col-md-4">
-                            <div class="metric-card text-center mb-3">
-                                <div class="metric-label">Depresión</div>
-                                <span class="badge badge-pill bg-{{ dep_class }}">{{ dep_prediction }}</span>
-                            </div>
-                            <div class="metric-card text-center mb-3">
-                                <div class="metric-label">Ansiedad</div>
-                                <span class="badge badge-pill bg-{{ anx_class }}">{{ anx_prediction }}</span>
-                            </div>
-                            <div class="metric-card text-center mb-3">
-                                <div class="metric-label">Estrés</div>
-                                <span class="badge badge-pill bg-{{ str_class }}">{{ str_prediction }}</span>
+                            <div class="metric-card">
+                                <small class="text-muted text-uppercase">Depresión</small>
+                                <span class="metric-value text-{{ dep_class }}">{{ dep_prediction }}</span>
                             </div>
                         </div>
-
                         <div class="col-md-4">
-                            <div class="metric-card h-100">
-                                <div class="metric-label text-center mb-2">Perfil de Personalidad</div>
+                            <div class="metric-card">
+                                <small class="text-muted text-uppercase">Ansiedad</small>
+                                <span class="metric-value text-{{ anx_class }}">{{ anx_prediction }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="metric-card">
+                                <small class="text-muted text-uppercase">Estrés</small>
+                                <span class="metric-value text-{{ str_class }}">{{ str_prediction }}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="card p-3 border-0 bg-light h-100">
+                                <h6 class="text-center mb-3">Perfil de Personalidad</h6>
                                 <canvas id="personalityChart"></canvas>
                             </div>
                         </div>
-
-                        <div class="col-md-4">
-                            <div class="metric-card h-100">
-                                <div class="metric-label mb-3">💡 Recomendaciones IA</div>
-                                <ul class="list-group list-group-flush text-start">
+                        <div class="col-md-6">
+                            <div class="card p-3 border-0 bg-light h-100">
+                                <h6 class="mb-3">Recomendaciones Personalizadas</h6>
+                                <ul class="list-group list-group-flush bg-transparent">
                                     {% for title, desc in recommendations %}
-                                    <li class="list-group-item bg-transparent px-0">
-                                        <strong>{{ title }}</strong><br>
+                                    <li class="list-group-item bg-transparent px-0 py-2">
+                                        <div class="fw-bold text-primary">{{ title }}</div>
                                         <small class="text-muted">{{ desc }}</small>
                                     </li>
                                     {% endfor %}
@@ -280,30 +262,27 @@
                         </div>
                     </div>
 
-                    <div class="text-center mt-4">
-                        <a href="/" class="btn btn-outline-primary">Realizar nuevo análisis</a>
+                    <div class="text-center mt-5">
+                        <a href="/" class="btn btn-outline-secondary px-4 rounded-pill">Realizar nuevo análisis</a>
                     </div>
                 </div>
 
                 <script>
                     const ctx = document.getElementById('personalityChart').getContext('2d');
-                    // Usamos | tojson para pasar la lista de Python a JS de forma segura
-                    const radarData = {{ radar_data | tojson }}; 
+                    const radarData = {{ radar_data | tojson }};
 
                     new Chart(ctx, {
                         type: 'radar',
                         data: {
                             labels: ['Extraversión', 'Amabilidad', 'Responsabilidad', 'Estabilidad', 'Apertura'],
                             datasets: [{
-                                label: 'Tu Perfil',
+                                label: 'Perfil',
                                 data: radarData,
                                 fill: true,
-                                backgroundColor: 'rgba(79, 70, 229, 0.2)',
-                                borderColor: 'rgba(79, 70, 229, 1)',
+                                backgroundColor: 'rgba(37, 99, 235, 0.2)',
+                                borderColor: 'rgba(37, 99, 235, 1)',
                                 pointBackgroundColor: '#fff',
-                                pointBorderColor: '#fff',
-                                pointHoverBackgroundColor: '#fff',
-                                pointHoverBorderColor: 'rgba(79, 70, 229, 1)'
+                                pointBorderColor: '#2563eb'
                             }]
                         },
                         options: {
@@ -315,9 +294,7 @@
                                     grid: { color: 'rgba(0,0,0,0.05)' }
                                 }
                             },
-                            plugins: {
-                                legend: { display: false }
-                            }
+                            plugins: { legend: { display: false } }
                         }
                     });
                 </script>

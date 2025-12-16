@@ -1,0 +1,6 @@
+Flask
+Flask-Login
+Flask-SQLAlchemy
+numpy
+scikit-learn
+tflite-runtime
