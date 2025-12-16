@@ -1,7 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import numpy as np
 import pickle
-import tflite_runtime.interpreter as tflite
+#import tflite_runtime.interpreter as tflite
+try:
+    # Intenta importar la versión ligera (Para PythonAnywhere)
+    import tflite_runtime.interpreter as tflite
+except ImportError:
+    # Si falla, importa la versión completa (Para tu PC Windows)
+    import tensorflow.lite as tflite
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import check_password_hash
@@ -157,3 +163,7 @@ def dashboard():
         stats['str'][r.str_result] = stats['str'].get(r.str_result, 0) + 1 # Contamos estrés
         
     return render_template('dashboard.html', results=all_results, stats=stats)
+
+# --- ESTO VA AL FINAL DEL ARCHIVO ---
+if __name__ == '__main__':
+    app.run(debug=True, port=5000)
