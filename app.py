@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import numpy as np
 import pickle
-#import tflite_runtime.interpreter as tflite
+
 try:
-    # Intenta importar la versión ligera (Para PythonAnywhere)
+    
     import tflite_runtime.interpreter as tflite
 except ImportError:
-    # Si falla, importa la versión completa (Para tu PC Windows)
+    
     import tensorflow.lite as tflite
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
@@ -16,7 +16,7 @@ import os
 
 app = Flask(__name__)
 
-# --- CONFIGURACIÓN ---
+
 app.config['SECRET_KEY'] = 'clave_secreta_super_segura'
 basedir = os.path.abspath(os.path.dirname(__file__))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'neurodata.db')
@@ -26,7 +26,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-# --- MODELOS BD ---
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100), unique=True)
@@ -47,7 +47,7 @@ class SurveyResult(db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-# --- CARGA DEL MODELO ---
+
 model_path = os.path.join(basedir, 'model.tflite')
 scaler_path = os.path.join(basedir, 'scaler.pkl')
 
@@ -60,7 +60,7 @@ output_details = interpreter.get_output_details()
 with open(scaler_path, 'rb') as f:
     scaler = pickle.load(f)
 
-# --- RUTAS ---
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -90,14 +90,13 @@ def index():
 
     if request.method == 'POST':
         try:
-            # 1. Datos
+          
             features = [float(request.form[f'tipi{i}']) for i in range(1, 11)]
             features.append(float(request.form['age']))
             
-            # 2. Preprocesar
+          
             input_scaled = scaler.transform(np.array([features])).astype(np.float32)
             
-            # 3. PREDICCIÓN TFLITE
             interpreter.set_tensor(input_details[0]['index'], input_scaled)
             interpreter.invoke()
             
@@ -154,16 +153,16 @@ def dashboard():
     
     all_results = SurveyResult.query.order_by(SurveyResult.date.desc()).all()
     
-    # --- CORRECCIÓN AQUÍ: Agregamos 'str' al diccionario ---
+    
     stats = {'dep': {}, 'anx': {}, 'str': {}}
     
     for r in all_results:
         stats['dep'][r.dep_result] = stats['dep'].get(r.dep_result, 0) + 1
         stats['anx'][r.anx_result] = stats['anx'].get(r.anx_result, 0) + 1
-        stats['str'][r.str_result] = stats['str'].get(r.str_result, 0) + 1 # Contamos estrés
+        stats['str'][r.str_result] = stats['str'].get(r.str_result, 0) + 1 
         
     return render_template('dashboard.html', results=all_results, stats=stats)
 
-# --- ESTO VA AL FINAL DEL ARCHIVO ---
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

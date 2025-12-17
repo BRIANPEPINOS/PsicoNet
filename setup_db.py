@@ -1,11 +1,10 @@
 from app import app, db, User
 from werkzeug.security import generate_password_hash
 
-# Esto crea las tablas en la base de datos
 with app.app_context():
     db.create_all()
 
-    # --- CREAR ADMINISTRADOR ---
+ 
     if not User.query.filter_by(username='admin').first():
         admin = User(
             username='admin',
@@ -16,7 +15,7 @@ with app.app_context():
         db.session.add(admin)
         print("Administrador creado.")
 
-    # --- CREAR COMPAÑEROS (Ejemplos) ---
+    
     students = [
         ('brian', 'brian123', 'Brian Pepinos'),
         ('edith', 'edith123', 'Edith Chuico'),

@@ -88,14 +88,14 @@
     </div>
 
     <script>
-        // Datos pasados desde Flask
+        
         const depData = {{ stats.dep | tojson }};
         const anxData = {{ stats.anx | tojson }};
-        const strData = {{ stats.str | tojson }}; // Nuevo dato
+        const strData = {{ stats.str | tojson }}; 
 
         function createChart(ctxId, dataObj, color, label) {
             new Chart(document.getElementById(ctxId), {
-                type: 'doughnut', // Cambié a gráfico de dona que se ve mejor en dashboard
+                type: 'doughnut', 
                 data: {
                     labels: Object.keys(dataObj),
                     datasets: [{
@@ -116,9 +116,9 @@
             });
         }
 
-        createChart('depChart', depData, '#4f46e5'); // Morado
-        createChart('anxChart', anxData, '#ef4444'); // Rojo
-        createChart('strChart', strData, '#f59e0b'); // Naranja (Nuevo)
+        createChart('depChart', depData, '#4f46e5'); 
+        createChart('anxChart', anxData, '#ef4444'); 
+        createChart('strChart', strData, '#f59e0b'); 
     </script>
 </body>
 </html>
