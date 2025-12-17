@@ -53,6 +53,8 @@
             font-weight: 600;
             color: #374151;
             font-size: 0.9rem;
+            margin-bottom: 10px;
+            display: block;
         }
 
         .btn-primary {
@@ -78,6 +80,7 @@
             display: block;
         }
 
+        /* Estilo para la guía de instrucciones */
         .instruction-box {
             background-color: var(--primary-soft);
             border-left: 4px solid var(--primary);
@@ -95,6 +98,64 @@
             margin-top: 10px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+
+        /* Estilos para los botones de selección */
+        .rating-btn-group {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .rating-btn {
+            flex: 1;
+            padding: 10px 4px;
+            font-size: 1rem;
+            font-weight: 700;
+            border: 2px solid #e5e7eb;
+            background-color: white;
+            color: #6b7280;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            min-width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .rating-btn:hover {
+            background-color: #f3f4f6;
+            border-color: #d1d5db;
+        }
+
+        .rating-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .rating-description {
+            text-align: center;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+            font-size: 0.85rem;
+            color: #4b5563;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .rating-btn {
+                padding: 8px 3px;
+                font-size: 0.9rem;
+                min-width: 35px;
+            }
         }
     </style>
 </head>
@@ -158,67 +219,202 @@
                         </div>
                     </div>
                 </div>
-                <form action="/" method="POST">
+                
+                <form action="/" method="POST" id="personalityForm">
                     <div class="row g-4 mb-4">
+                        
+                        <!-- Pregunta 1 -->
                         <div class="col-md-6">
                             <label class="form-label">1. Extravertido, entusiasta</label>
-                            <input type="number" class="form-control bg-light border-0" name="tipi1" min="1" max="7" placeholder="1 - 7" required>
+                            <div class="rating-btn-group">
+                                {% for i in range(1, 8) %}
+                                <input type="radio" class="btn-check" name="tipi1" id="tipi1_{{ i }}" value="{{ i }}" required style="display: none;">
+                                <label class="rating-btn" for="tipi1_{{ i }}">
+                                    {{ i }}
+                                </label>
+                                {% endfor %}
+                            </div>
                         </div>
+                        
+                        <!-- Pregunta 2 -->
                         <div class="col-md-6">
                             <label class="form-label">2. Crítico, combativo</label>
-                            <input type="number" class="form-control bg-light border-0" name="tipi2" min="1" max="7" placeholder="1 - 7" required>
+                            <div class="rating-btn-group">
+                                {% for i in range(1, 8) %}
+                                <input type="radio" class="btn-check" name="tipi2" id="tipi2_{{ i }}" value="{{ i }}" required style="display: none;">
+                                <label class="rating-btn" for="tipi2_{{ i }}">
+                                    {{ i }}
+                                </label>
+                                {% endfor %}
+                            </div>
                         </div>
+                        
+                        <!-- Pregunta 3 -->
                         <div class="col-md-6">
                             <label class="form-label">3. Confiable, autodisciplinado</label>
-                            <input type="number" class="form-control bg-light border-0" name="tipi3" min="1" max="7" placeholder="1 - 7" required>
+                            <div class="rating-btn-group">
+                                {% for i in range(1, 8) %}
+                                <input type="radio" class="btn-check" name="tipi3" id="tipi3_{{ i }}" value="{{ i }}" required style="display: none;">
+                                <label class="rating-btn" for="tipi3_{{ i }}">
+                                    {{ i }}
+                                </label>
+                                {% endfor %}
+                            </div>
                         </div>
+                        
+                        <!-- Pregunta 4 -->
                         <div class="col-md-6">
                             <label class="form-label">4. Ansioso, se altera fácilmente</label>
-                            <input type="number" class="form-control bg-light border-0" name="tipi4" min="1" max="7" placeholder="1 - 7" required>
+                            <div class="rating-btn-group">
+                                {% for i in range(1, 8) %}
+                                <input type="radio" class="btn-check" name="tipi4" id="tipi4_{{ i }}" value="{{ i }}" required style="display: none;">
+                                <label class="rating-btn" for="tipi4_{{ i }}">
+                                    {{ i }}
+                                </label>
+                                {% endfor %}
+                            </div>
                         </div>
+                        
+                        <!-- Pregunta 5 -->
                         <div class="col-md-6">
                             <label class="form-label">5. Abierto a nuevas experiencias</label>
-                            <input type="number" class="form-control bg-light border-0" name="tipi5" min="1" max="7" placeholder="1 - 7" required>
+                            <div class="rating-btn-group">
+                                {% for i in range(1, 8) %}
+                                <input type="radio" class="btn-check" name="tipi5" id="tipi5_{{ i }}" value="{{ i }}" required style="display: none;">
+                                <label class="rating-btn" for="tipi5_{{ i }}">
+                                    {{ i }}
+                                </label>
+                                {% endfor %}
+                            </div>
                         </div>
+                        
+                        <!-- Pregunta 6 -->
                         <div class="col-md-6">
                             <label class="form-label">6. Reservado, callado</label>
-                            <input type="number" class="form-control bg-light border-0" name="tipi6" min="1" max="7" placeholder="1 - 7" required>
+                            <div class="rating-btn-group">
+                                {% for i in range(1, 8) %}
+                                <input type="radio" class="btn-check" name="tipi6" id="tipi6_{{ i }}" value="{{ i }}" required style="display: none;">
+                                <label class="rating-btn" for="tipi6_{{ i }}">
+                                    {{ i }}
+                                </label>
+                                {% endfor %}
+                            </div>
                         </div>
+                        
+                        <!-- Pregunta 7 -->
                         <div class="col-md-6">
                             <label class="form-label">7. Comprensivo, cálido</label>
-                            <input type="number" class="form-control bg-light border-0" name="tipi7" min="1" max="7" placeholder="1 - 7" required>
+                            <div class="rating-btn-group">
+                                {% for i in range(1, 8) %}
+                                <input type="radio" class="btn-check" name="tipi7" id="tipi7_{{ i }}" value="{{ i }}" required style="display: none;">
+                                <label class="rating-btn" for="tipi7_{{ i }}">
+                                    {{ i }}
+                                </label>
+                                {% endfor %}
+                            </div>
                         </div>
+                        
+                        <!-- Pregunta 8 -->
                         <div class="col-md-6">
                             <label class="form-label">8. Desorganizado, descuidado</label>
-                            <input type="number" class="form-control bg-light border-0" name="tipi8" min="1" max="7" placeholder="1 - 7" required>
+                            <div class="rating-btn-group">
+                                {% for i in range(1, 8) %}
+                                <input type="radio" class="btn-check" name="tipi8" id="tipi8_{{ i }}" value="{{ i }}" required style="display: none;">
+                                <label class="rating-btn" for="tipi8_{{ i }}">
+                                    {{ i }}
+                                </label>
+                                {% endfor %}
+                            </div>
                         </div>
+                        
+                        <!-- Pregunta 9 -->
                         <div class="col-md-6">
                             <label class="form-label">9. Calmado, emocionalmente estable</label>
-                            <input type="number" class="form-control bg-light border-0" name="tipi9" min="1" max="7" placeholder="1 - 7" required>
+                            <div class="rating-btn-group">
+                                {% for i in range(1, 8) %}
+                                <input type="radio" class="btn-check" name="tipi9" id="tipi9_{{ i }}" value="{{ i }}" required style="display: none;">
+                                <label class="rating-btn" for="tipi9_{{ i }}">
+                                    {{ i }}
+                                </label>
+                                {% endfor %}
+                            </div>
                         </div>
+                        
+                        <!-- Pregunta 10 -->
                         <div class="col-md-6">
                             <label class="form-label">10. Convencional, poco creativo</label>
-                            <input type="number" class="form-control bg-light border-0" name="tipi10" min="1" max="7" placeholder="1 - 7" required>
+                            <div class="rating-btn-group">
+                                {% for i in range(1, 8) %}
+                                <input type="radio" class="btn-check" name="tipi10" id="tipi10_{{ i }}" value="{{ i }}" required style="display: none;">
+                                <label class="rating-btn" for="tipi10_{{ i }}">
+                                    {{ i }}
+                                </label>
+                                {% endfor %}
+                            </div>
                         </div>
+                        
+                        <!-- Campo de edad -->
                         <div class="col-12">
                             <label class="form-label">Edad</label>
                             <input type="number" class="form-control bg-light border-0" name="age" min="13" max="99" required>
                         </div>
+                        
+                        <!-- Indicador de progreso (opcional) -->
+                        <div class="col-12">
+                            <div class="rating-description">
+                                <strong>Recuerda:</strong> Selecciona un número del 1 al 7 para cada rasgo. <strong>1 = Muy en desacuerdo</strong> (esto no me describe en absoluto), <strong>7 = Muy de acuerdo</strong> (esto me describe perfectamente).
+                            </div>
+                        </div>
                     </div>
 
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary py-3">
+                        <button type="submit" class="btn btn-primary py-3" id="submitBtn">
                             Analizar Resultados
                         </button>
                     </div>
                 </form>
+                
+                <script>
+                    // Añadir funcionalidad para resaltar el botón seleccionado
+                    document.querySelectorAll('.rating-btn').forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            // Remover clase active de todos los botones del mismo grupo
+                            const group = this.closest('.rating-btn-group');
+                            group.querySelectorAll('.rating-btn').forEach(b => {
+                                b.classList.remove('active');
+                            });
+                            // Añadir clase active al botón clickeado
+                            this.classList.add('active');
+                        });
+                    });
+                    
+                    // Validar que todas las preguntas tengan respuesta antes de enviar
+                    document.getElementById('personalityForm').addEventListener('submit', function(e) {
+                        const questions = ['tipi1', 'tipi2', 'tipi3', 'tipi4', 'tipi5', 
+                                         'tipi6', 'tipi7', 'tipi8', 'tipi9', 'tipi10'];
+                        let allAnswered = true;
+                        
+                        questions.forEach(name => {
+                            const selected = document.querySelector(`input[name="${name}"]:checked`);
+                            if (!selected) {
+                                allAnswered = false;
+                            }
+                        });
+                        
+                        if (!allAnswered) {
+                            e.preventDefault();
+                            alert('Por favor, responde todas las preguntas antes de enviar.');
+                        }
+                    });
+                </script>
                 {% endif %}
 
                 {% if show_results %}
                 <div class="result-section fade-in">
-                    <h3 class="text-center mb-4 fw-bold text-primary">Resultados del Análisis</h3>
+                    <h3 class="text-center mb-4 fw-bold text-primary">Análisis de Riesgos</h3>
+                    <h3 class="text-left mb-4 fw-bold text-primary">Resultados:</h3>
 
-                    <div class="row g-3">
+                    <div class="row g-3">   
                         <div class="col-md-4">
                             <div class="metric-card">
                                 <small class="text-muted text-uppercase">Depresión</small>
@@ -258,9 +454,24 @@
                                     {% endfor %}
                                 </ul>
                             </div>
+                        </div>                        
+                    </div>
+                    <div class="card border-0 shadow-sm mt-4 bg-light text-center" style="color: #374151; border-radius: 20px;">
+                        <div class="card-body p-4">
+                            <h6 class="text-uppercase" style="opacity: 0.8; letter-spacing: 2px; font-size: 0.8rem;">Tu Rasgo Dominante</h6>
+                            
+                            <img src="{{ archetype.image_url }}"
+                                alt="{{ archetype.title }}"
+                                crossorigin="anonymous"
+                                referrerpolicy="no-referrer"
+                                onerror="handleImageError(this)"
+                                class="img-fluid"
+                                style="max-height: 200px; object-fit: cover; border: 1px solid #2563eb;">
+                            
+                            <h2 class="fw-bold mb-2">{{ archetype.title }}</h2>
+                            <p class="lead mb-0" style="opacity: 0.9; font-size: 1.1rem;">"{{ archetype.desc }}"</p>
                         </div>
                     </div>
-
                     <div class="text-center mt-5">
                         <a href="/" class="btn btn-outline-secondary px-4 rounded-pill">Realizar nuevo análisis</a>
                     </div>
