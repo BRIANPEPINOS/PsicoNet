@@ -90,13 +90,14 @@ def index():
 
     if request.method == 'POST':
         try:
-          
+            # 1. Datos
             features = [float(request.form[f'tipi{i}']) for i in range(1, 11)]
             features.append(float(request.form['age']))
             
-          
+            # 2. Preprocesar
             input_scaled = scaler.transform(np.array([features])).astype(np.float32)
             
+            # 3. PREDICCIÓN TFLITE
             interpreter.set_tensor(input_details[0]['index'], input_scaled)
             interpreter.invoke()
             
@@ -121,24 +122,44 @@ def index():
             db.session.add(new_result)
             db.session.commit()
 
+          
+
             # 5. Visuales
             radar_data = [
-                (features[0] + (8-features[5]))/2, ((8-features[1]) + features[6])/2,
-                (features[2] + (8-features[7]))/2, ((8-features[3]) + features[8])/2,
-                (features[4] + (8-features[9]))/2
+                (features[0] + (8-features[5]))/2, 
+                ((8-features[1]) + features[6])/2, 
+                (features[2] + (8-features[7]))/2, 
+                ((8-features[3]) + features[8])/2, 
+                (features[4] + (8-features[9]))/2  
             ]
             
+         
+            archetypes = [
+                {"title": "El Conector Social", "image_url": "https://i.imgur.com/50YENDj.gif", "desc": "Brillas en grupo y contagias energía a los demás."},  # 0: Extraversión
+                {"title": "El Diplomático", "image_url": "https://i.imgur.com/51g1DT0.gif", "desc": "La empatía es tu superpoder; buscas la armonía."},       # 1: Amabilidad
+                {"title": "El Arquitecto", "image_url": "https://i.imgur.com/8HOPLdR.jpeg", "desc": "Ordenado y disciplinado, conviertes planes en realidad."}, # 2: Responsabilidad
+                {"title": "El Faro de Calma", "image_url": "https://i.imgur.com/k5rBiNZ.jpeg", "desc": "Mantienes la cabeza fría cuando otros la pierden."},    # 3: Estabilidad
+                {"title": "El Visionario", "image_url": "https://i.imgur.com/nEJZMa6.jpeg", "desc": "Curioso y creativo, siempre buscas nuevas perspectivas."}  # 4: Apertura
+            ]
+            
+            # Buscamos el índice del valor máximo
+            max_value = max(radar_data)
+            max_index = radar_data.index(max_value)
+            current_archetype = archetypes[max_index]
+
             recs = []
             if "Alto" in labels[a_idx]: recs.append(("Respiración 4-7-8", "Inhala 4s, sostén 7s, exhala 8s."))
-            if "Alto" in labels[d_idx]: recs.append(("Activación", "Haz una actividad pequeña."))
-            if not recs: recs.append(("Mantenimiento", "Todo parece estable."))
+            if "Alto" in labels[d_idx]: recs.append(("Activación Conductual", "Haz una actividad pequeña (tender la cama)."))
+            if not recs: recs.append(("Mantenimiento", "Todo parece estable. Sigue cultivando tus hobbies."))
 
             context = {
                 'show_results': True,
                 'dep_prediction': labels[d_idx], 'dep_class': colors[d_idx],
                 'anx_prediction': labels[a_idx], 'anx_class': colors[a_idx],
                 'str_prediction': labels[s_idx], 'str_class': colors[s_idx],
-                'radar_data': radar_data, 'recommendations': recs
+                'radar_data': radar_data, 
+                'recommendations': recs,
+                'archetype': current_archetype 
             }
             
         except Exception as e:
